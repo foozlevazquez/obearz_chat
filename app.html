@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Our superheroes</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+
+      <header>
+
+      </header>
+
+      <section>
+
+      </section>
+
+    <script>
+      const header = document.querySelector('header');
+      const section = document.querySelector('section');
+
+      let requestURL = 'http://localhost:8080/world'
+      let request = new XMLHttpRequest();
+
+      request.open('GET', requestURL);
+      request.responseType = 'text';
+      request.send();
+
+      request.onload = function() {
+          const clients_resp = request.response;
+          const clients = JSON.parse(clients_resp);
+
+          console.log(clients);
+          show(clients);
+      }
+
+      function show(clients) {
+          const client_names = Object.keys(clients);
+          for(let i = 0; i < client_names.length; i++) {
+              const client = clients[client_names[i]];
+              const myH1 = document.createElement('h1');
+
+              myH1.textContent = client.nickname;
+              header.appendChild(myH1);
+              for(var j = 0; j < client.inputs.length; j++) {
+                  var current_input = document.createElement("p");
+                  current_input.textContent = client.inputs[j];
+                  section.appendChild(current_input);
+              }
+          }
+      };
+
+      var loop = function() {
+
+      };
+    </script>
+  </body>
+</html>
